@@ -3,19 +3,20 @@
 # pacman -S --noconfirm base-devel mingw-w64-i686-toolchain \
 #   mingw-w64-x86_64-toolchain pactoys git unzip zip
 
+if [ -d ./vim ]; then
+    rm -rf vim
+fi
+
 git clone --depth 1 https://github.com/vim/vim
 
-cd vim
+cd ./vim/src
 
-rm -rf vim91*
-rm -rf src/objx86-64/*.o
-
-cd ./src
-
-make -f Make_ming.mak GUI=no FEATURES=HUGE ARCH=x86-64 \
+make -f Make_ming.mak GUI=yes ARCH=x86-64 \
+    STATIC_STDCPLUS=yes \
     PYTHON3=C:/Users/$(whoami)/scoop/apps/python/current \
     DYNAMIC_PYTHON3=yes PYTHON3_VER=312
-make -f Make_ming.mak GUI=yes FEATURES=HUGE ARCH=x86-64 \
+make -f Make_ming.mak GUI=no ARCH=x86-64 \
+    STATIC_STDCPLUS=yes \
     PYTHON3=C:/Users/$(whoami)/scoop/apps/python/current \
     DYNAMIC_PYTHON3=yes PYTHON3_VER=312
 

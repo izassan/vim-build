@@ -1,26 +1,29 @@
 #!/usr/bin/env bash
 
-# pacman -S --noconfirm base-devel mingw-w64-i686-toolchain \
-#   mingw-w64-x86_64-toolchain pactoys git unzip zip
+set -e
 
-if [ -d ./vim ]; then
-    rm -rf vim
+pacman -S --noconfirm --needed base-devel mingw-w64-i686-toolchain \
+  mingw-w64-x86_64-toolchain pactoys git unzip zip
+
+if [ ! -d ./vim ]; then
+    git clone --depth 1 https://github.com/vim/vim
 fi
-
-git clone --depth 1 https://github.com/vim/vim
 
 cd ./vim/src
 
 make -f Make_ming.mak GUI=yes ARCH=x86-64 \
     STATIC_STDCPLUS=yes \
-    PYTHON3=C:/Users/$(whoami)/scoop/apps/python/current \
-    DYNAMIC_PYTHON3=yes PYTHON3_VER=312
+    PYTHON3=$1 \
+    DYNAMIC_PYTHON3=yes PYTHON3_VER=$2
 make -f Make_ming.mak GUI=no ARCH=x86-64 \
     STATIC_STDCPLUS=yes \
-    PYTHON3=C:/Users/$(whoami)/scoop/apps/python/current \
-    DYNAMIC_PYTHON3=yes PYTHON3_VER=312
+    PYTHON3=$1 \
+    DYNAMIC_PYTHON3=yes PYTHON3_VER=$2
 
 cd ..
+if [ -d ./vim91 ]; then
+    rm -r ./vim91
+fi
 mkdir vim91
 cp -r runtime/* vim91
 cp src/*.exe vim91

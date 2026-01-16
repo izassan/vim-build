@@ -1,0 +1,13 @@
+{
+    "vim": {
+        "version": "91"
+    },
+    "python": {
+        "version": "314"
+    },
+    "release": {
+        "tag": "v9.1.2086",
+        "note": "build vim9.1.2086 with python3.14",
+        "title": "vim9.1.2086"
+    }
+}

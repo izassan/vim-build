@@ -3,7 +3,7 @@ Param(
 )
 
 $config = Get-Content $PSScriptRoot\config.json | ConvertFrom-Json
-$pythonDirFormatted = $PythonDir.Replace("\", "/")
+$PythonDir = $PythonDir.Replace("\", "/")
 
 # make variable and check
 $pythonVer = $config.python.version
@@ -34,7 +34,7 @@ if(($null -eq $title) -Or ($title -eq "")){
 
 # build vim
 $vimBuildDir = "$PSScriptRoot\vim\vim$vimVersion"
-mingw64 ./build.sh $pythonDirFormatted $pythonVer
+mingw64 ./build.sh $vimVersion $pythonVer $PythonDir 
 if(-Not(Test-Path $vimBuildDir\vim.exe)){
     "vim build failed"
     exit
